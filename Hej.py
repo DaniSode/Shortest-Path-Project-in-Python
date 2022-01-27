@@ -4,7 +4,7 @@ from matplotlib.collections import LineCollection
 from scipy.sparse import csr_matrix
 import time
 
-# Maybe read row by row
+
 def read_coordinate_file(filename):
     with open(filename, mode="r") as file:
         sample_coord = file.readline()
@@ -32,18 +32,16 @@ def plot_points(coord_list, indices):
     fig.add_collection(hej)
     plt.show()
 
-# Instead of visited look at next city
+
 def construct_graph_connections(coord_list, radius):
     pair_indices = []
     distances = []
-    visited = set()
     for i, city in enumerate(coord_list):
-        visited.add(i)
         dxdy = coord_list - city
-        tot_distances = np.sqrt(np.square(dxdy[:, 0]) + np.square(dxdy[:, 1]))
+        tot_distances = np.sqrt(np.square(dxdy[i + 1:, 0]) + np.square(dxdy[i + 1:, 1]))
         for j, distance in enumerate(tot_distances):
-            if not(j in visited or distance > radius):
-                pair_indices.append([i, j])
+            if distance <= radius:
+                pair_indices.append([i, i + 1 + j])
                 distances.append(distance)
     return np.array(pair_indices), np.array(distances)
 
