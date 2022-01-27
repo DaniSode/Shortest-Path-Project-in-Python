@@ -3,7 +3,13 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from scipy.sparse import csr_matrix
 import time
+<<<<<<< HEAD
 # Hej 
+=======
+
+# Hej, här är en ny ändring som en collaborator har gjort!
+
+>>>>>>> f04dc467e5820cb26bfdda52d0ca77a26c7b4537
 # Maybe read row by row
 def read_coordinate_file(filename):
     with open(filename, mode="r") as file:
