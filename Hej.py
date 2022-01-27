@@ -4,6 +4,8 @@ from matplotlib.collections import LineCollection
 from scipy.sparse import csr_matrix
 import time
 
+# Hej, här är en ny ändring som en collaborator har gjort!
+
 # Maybe read row by row
 def read_coordinate_file(filename):
     with open(filename, mode="r") as file:
