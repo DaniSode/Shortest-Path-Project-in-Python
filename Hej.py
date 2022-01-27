@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from scipy.sparse import csr_matrix
 import time
-# Hej
+
 
 def read_coordinate_file(filename):
     with open(filename, mode="r") as file:
