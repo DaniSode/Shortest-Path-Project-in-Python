@@ -90,14 +90,14 @@ def find_shortest_path(graph, start_node, end_node):
 
 
 
-radius = 0.005
+radius = 0.08
 #N = 7 #length(SampleCoordinates)
-start_node = 311
-end_node = 702
+start_node = 0
+end_node = 5
 
 # Call functions
 start = time.time()
-coord_list = read_coordinate_file('HungaryCities.txt')
+coord_list = read_coordinate_file('SampleCoordinates.txt')
 N = len(coord_list)
 end = time.time()
 print('Time to finish function: "read_coordinate_file"', end - start)
@@ -123,7 +123,6 @@ start = time.time()
 plot_points(coord_list, indices, seq)
 end = time.time()
 print('Time to finish function: "plot_points"', end - start)
-
 
 """
 while True:
