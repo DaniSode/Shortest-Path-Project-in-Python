@@ -23,8 +23,12 @@ def read_coordinate_file(filename):
 
 
 def plot_points(coord_list, indices, path):
+
+    # PLOT CITIES
     plt.scatter(coord_list[:, 0], coord_list[:, 1], s=5, c="r")
-    plt.gca().set_aspect('equal')  # height to width ratio 1.5
+    plt.gca().set_aspect('equal')
+
+    # PLOT AVAILABLE CONNECTIONS
     city_pair_coord = []
     for i, j in indices:
         city_pair_coord.append([[coord_list[i, 0], coord_list[i, 1]], [coord_list[j, 0], coord_list[j, 1]]])
@@ -33,7 +37,6 @@ def plot_points(coord_list, indices, path):
     fig.add_collection(lc)
 
     # PLOT SHORTEST PATH
-
     path_coord_x = []
     path_coord_y = []
     for city in path:
@@ -71,8 +74,6 @@ def find_shortest_path(graph, start_node, end_node):
         path.append(a)
     path.append(start_node)
     path.reverse()
-
-
     return path, start_end_dist
 
 # To have in the end
@@ -80,8 +81,8 @@ def find_shortest_path(graph, start_node, end_node):
 # print("For example 'SampleCoordinates 0.08' and press enter.")
 # Inputs
 
+# GIVEN DATA
 radius = 0.0025
-#N = 7 #length(SampleCoordinates)
 start_node = 1573
 end_node = 10584
 
@@ -101,8 +102,6 @@ start = time.time()
 graph = construct_graph(indices, distance, N)
 end = time.time()
 print('Time to finish function: "construct_graph"', end - start)
-
-
 
 start = time.time()
 path, start_end_dist = find_shortest_path(graph, start_node, end_node)
