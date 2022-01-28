@@ -4,7 +4,7 @@ from matplotlib.collections import LineCollection
 from scipy.sparse import csr_matrix
 import time
 
-# hej
+
 def read_coordinate_file(filename):
     with open(filename, mode="r") as file:
         sample_coord = file.readline()
