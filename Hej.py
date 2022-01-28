@@ -22,22 +22,24 @@ def read_coordinate_file(filename):
     return coord_list
 
 
-def plot_points(coord_list, indices, seq):
+def plot_points(coord_list, indices, path):
     plt.scatter(coord_list[:, 0], coord_list[:, 1], s=5, c="r")
-    plt.gca().set_aspect(1.05)  # height to width ratio 1.5
+    plt.gca().set_aspect('equal')  # height to width ratio 1.5
     city_pair_coord = []
     for i, j in indices:
         city_pair_coord.append([[coord_list[i, 0], coord_list[i, 1]], [coord_list[j, 0], coord_list[j, 1]]])
-    hej = LineCollection(city_pair_coord, linewidth=0.4, colors="gray")
+    lc = LineCollection(city_pair_coord, linewidth=0.4, colors="gray")
     fig = plt.subplot()
-    fig.add_collection(hej)
+    fig.add_collection(lc)
 
-    troll_x = []
-    troll_y = []
-    for o in seq:
-        troll_x.append(coord_list[o, 0])
-        troll_y.append(coord_list[o, 1])
-    plt.plot(troll_x, troll_y, linewidth=1, c="blue")
+    # PLOT SHORTEST PATH
+
+    path_coord_x = []
+    path_coord_y = []
+    for city in path:
+        path_coord_x.append(coord_list[city, 0])
+        path_coord_y.append(coord_list[city, 1])
+    plt.plot(path_coord_x, path_coord_y, linewidth=1, c="blue")
     plt.show()
 
 
@@ -60,44 +62,32 @@ def construct_graph(indices, distance, N):
 
 
 def find_shortest_path(graph, start_node, end_node):
-    distance, predecessor = shortest_path(csgraph = graph, directed = False, return_predecessors = True, indices = start_node)
-
+    distance, predecessor = shortest_path(graph, directed=False, return_predecessors=True, indices=start_node)
     start_end_dist = distance[end_node]
-
-
-
     a = end_node
-
-    seq = [end_node]
-
+    path = [end_node]
     while predecessor[a] != start_node:
-
-
         a = predecessor[a]
-
-        seq.append(a)
-    seq.append(start_node)
-
-    seq.reverse()
+        path.append(a)
+    path.append(start_node)
+    path.reverse()
 
 
-    return seq, start_end_dist
+    return path, start_end_dist
 
 # To have in the end
 # print("\nInput filename and radius: ")
 # print("For example 'SampleCoordinates 0.08' and press enter.")
 # Inputs
 
-
-
-radius = 0.08
+radius = 0.0025
 #N = 7 #length(SampleCoordinates)
-start_node = 0
-end_node = 5
+start_node = 1573
+end_node = 10584
 
 # Call functions
 start = time.time()
-coord_list = read_coordinate_file('SampleCoordinates.txt')
+coord_list = read_coordinate_file('GermanyCities.txt')
 N = len(coord_list)
 end = time.time()
 print('Time to finish function: "read_coordinate_file"', end - start)
@@ -115,14 +105,15 @@ print('Time to finish function: "construct_graph"', end - start)
 
 
 start = time.time()
-seq, start_end_dist = find_shortest_path(graph, start_node, end_node)
+path, start_end_dist = find_shortest_path(graph, start_node, end_node)
 end = time.time()
 print('Time to finish function: "find_shortest_path"', end - start)
 
 start = time.time()
-plot_points(coord_list, indices, seq)
+plot_points(coord_list, indices, path)
 end = time.time()
 print('Time to finish function: "plot_points"', end - start)
+
 
 """
 while True:
