@@ -82,11 +82,18 @@ def construct_fast_graph_connections(coord_list, radius):
     Tree = cKDTree(coord_list)
     possible_cities = Tree.query_ball_point(coord_list, radius)
     indices=[]
+    distances=[]
     for i, element in enumerate(possible_cities):
         for j in element:
             if i < j:
                 indices.append([i, j])
-    print(np.array(indices))
+
+                dxdy = coord_list[i] - coord_list[j]
+
+                distances.append(np.sqrt(np.square(dxdy[0]) + np.square(dxdy[1])))
+
+    return np.array(indices), np.array(distances)
+
 
 
 # To have in the end
@@ -106,10 +113,18 @@ N = len(coord_list)
 end = time.time()
 print('Time to finish function: "read_coordinate_file"', end - start)
 
+
 start = time.time()
 indices, distance = construct_graph_connections(coord_list, radius)
 end = time.time()
 print('Time to finish function: "construct_graph_connections"', end - start)
+
+
+start = time.time()
+indices, distance = construct_fast_graph_connections(coord_list, radius)
+end = time.time()
+print('Time to finish function: "construct_graph_connections"', end - start)
+
 
 start = time.time()
 graph = construct_graph(indices, distance, N)
@@ -126,10 +141,8 @@ plot_points(coord_list, indices, path)
 end = time.time()
 print('Time to finish function: "plot_points"', end - start)
 
-start = time.time()
-construct_fast_graph_connections(coord_list, radius)
-end = time.time()
-print('Time to finish function: "construct_graph_connections"', end - start)
+print(indices, distance)
+
 
 
 
