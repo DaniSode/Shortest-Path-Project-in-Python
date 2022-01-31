@@ -45,7 +45,7 @@ def plot_points(coord_list, indices, path):
     plt.plot(path_coord_x, path_coord_y, linewidth=1, c="blue")
     plt.show()
 
-
+# Adjust inner for-loop
 def construct_graph_connections(coord_list, radius):
     pair_indices = []
     distances = []
@@ -75,6 +75,13 @@ def find_shortest_path(graph, start_node, end_node):
     path.append(start_node)
     path.reverse()
     return path, start_end_dist
+
+
+def construct_fast_graph_connections(coord_list, radius):
+
+
+
+
 
 # To have in the end
 # print("\nInput filename and radius: ")
