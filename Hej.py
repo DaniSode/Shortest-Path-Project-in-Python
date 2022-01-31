@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
+from scipy.spatial import cKDTree
 import time
 
 
@@ -78,9 +79,14 @@ def find_shortest_path(graph, start_node, end_node):
 
 
 def construct_fast_graph_connections(coord_list, radius):
-
-
-
+    Tree = cKDTree(coord_list)
+    possible_cities = Tree.query_ball_point(coord_list, radius)
+    indices=[]
+    for i, element in enumerate(possible_cities):
+        for j in element:
+            if i < j:
+                indices.append([i, j])
+    print(np.array(indices))
 
 
 # To have in the end
@@ -89,13 +95,13 @@ def construct_fast_graph_connections(coord_list, radius):
 # Inputs
 
 # GIVEN DATA
-radius = 0.0025
-start_node = 1573
-end_node = 10584
+radius = 0.08
+start_node = 0
+end_node = 5
 
 # Call functions
 start = time.time()
-coord_list = read_coordinate_file('GermanyCities.txt')
+coord_list = read_coordinate_file('SampleCoordinates.txt')
 N = len(coord_list)
 end = time.time()
 print('Time to finish function: "read_coordinate_file"', end - start)
@@ -119,6 +125,14 @@ start = time.time()
 plot_points(coord_list, indices, path)
 end = time.time()
 print('Time to finish function: "plot_points"', end - start)
+
+start = time.time()
+construct_fast_graph_connections(coord_list, radius)
+end = time.time()
+print('Time to finish function: "construct_graph_connections"', end - start)
+
+
+
 
 
 """
