@@ -7,11 +7,29 @@ from scipy.spatial import cKDTree
 import time
 
 
+def which_file(filename):
+    radius = start_node = end_node = None
+    if filename == 'SampleCoordinates':
+        radius = 0.08
+        start_node = 0
+        end_node = 5
+    elif filename == 'HungaryCities':
+        radius = 0.005
+        start_node = 311
+        end_node = 702
+    elif filename == 'GermanyCities':
+        radius = 0.0025
+        start_node = 1573
+        end_node = 10584
+    return radius, start_node, end_node
+
+
 def read_coordinate_file(filename):
-    with open(filename, mode="r") as file:
+    with open(filename + ".txt", mode='r') as file:
         sample_coord = file.readline()
         a = []
         while sample_coord:
+            # Do we need for loop here
             res = [float(line) for line in sample_coord.strip('{}\n').split(',')]
             a.append(res)
             sample_coord = file.readline()
@@ -46,7 +64,7 @@ def plot_points(coord_list, indices, path):
     plt.plot(path_coord_x, path_coord_y, linewidth=1, c="blue")
     plt.show()
 
-# Adjust inner for-loop
+
 def construct_graph_connections(coord_list, radius):
     pair_indices = []
     distances = []
@@ -87,71 +105,63 @@ def construct_fast_graph_connections(coord_list, radius):
         for j in element:
             if i < j:
                 indices.append([i, j])
-
                 dxdy = coord_list[i] - coord_list[j]
-
                 distances.append(np.sqrt(np.square(dxdy[0]) + np.square(dxdy[1])))
-
     return np.array(indices), np.array(distances)
 
 
-"""
-To have in the end
-print("\nInput filename and radius: ")
-print("For example 'SampleCoordinates 0.08' and press enter.")
-Inputs
-"""
-
-# GIVEN DATA
-radius = 0.08
-start_node = 0
-end_node = 5
-
-# Call functions
-start = time.time()
-coord_list = read_coordinate_file('SampleCoordinates.txt')
-N = len(coord_list)
-end = time.time()
-print('Time to finish function: "read_coordinate_file"', end - start)
-
-
-start = time.time()
-indices, distance = construct_graph_connections(coord_list, radius)
-end = time.time()
-print('Time to finish function: "construct_graph_connections"', end - start)
-
-
-start = time.time()
-indices, distance = construct_fast_graph_connections(coord_list, radius)
-end = time.time()
-print('Time to finish function: "construct_graph_connections"', end - start)
-
-
-start = time.time()
-graph = construct_graph(indices, distance, N)
-end = time.time()
-print('Time to finish function: "construct_graph"', end - start)
-
-start = time.time()
-path, start_end_dist = find_shortest_path(graph, start_node, end_node)
-end = time.time()
-print('Time to finish function: "find_shortest_path"', end - start)
-
-start = time.time()
-plot_points(coord_list, indices, path)
-end = time.time()
-print('Time to finish function: "plot_points"', end - start)
-
-print(indices, distance)
-
-
-"""
 while True:
-    try:
-        print("\nInput > ", end="")
-        filename, r = input().split()
-        calculate(read_coordinate_file(filename + ".txt"), float(r))
+    print("\nEnter the name of the file.")
+    print("For example 'SampleCoordinates' and press enter.")
+    print("Input > ", end="")
+    filename = input()
+    radius, start_node, end_node = which_file(filename)
+    if radius is not None:
         break
-    except (FileNotFoundError, ValueError) as error_message:
-        print(error_message)
-"""
+    print("Could not find given filename")
+
+
+while True:
+
+    # Call functions
+    start_1 = time.time()
+    coord_list = read_coordinate_file(filename)
+    N = len(coord_list)
+    end_1 = time.time()
+
+    print("Choose function:")
+    print("1. Fast")
+    print("2. Normal")
+    print("Selection > ", end="")
+    selection = input()
+    if selection.isnumeric() and (int(selection) == 1 or int(selection) == 2):
+        break
+    print('Incorrect input, try alternatives 1 or 2\n')
+
+if int(selection) == 1:
+    print('Time to finish function: "read_coordinate_file"', end_1 - start_1)
+    start_2 = time.time()
+    indices, distance = construct_fast_graph_connections(coord_list, radius)
+    end_2 = time.time()
+    print('Time to finish function: "construct_fast_graph_connections"', end_2 - start_2)
+elif int(selection) == 2:
+    print('Time to finish function: "read_coordinate_file"', end_1 - start_1)
+    start_2 = time.time()
+    indices, distance = construct_graph_connections(coord_list, radius)
+    end_2 = time.time()
+    print('Time to finish function: "construct_graph_connections"', end_2 - start_2)
+
+start_3 = time.time()
+graph = construct_graph(indices, distance, N)
+end_3 = time.time()
+print('Time to finish function: "construct_graph"', end_3 - start_3)
+
+start_4 = time.time()
+path, start_end_dist = find_shortest_path(graph, start_node, end_node)
+end_4 = time.time()
+print('Time to finish function: "find_shortest_path"', end_4 - start_4)
+
+start_5 = time.time()
+plot_points(coord_list, indices, path)
+end_5 = time.time()
+print('Time to finish function: "plot_points"', end_5 - start_5)
