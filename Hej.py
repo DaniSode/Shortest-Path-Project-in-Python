@@ -95,11 +95,12 @@ def construct_fast_graph_connections(coord_list, radius):
     return np.array(indices), np.array(distances)
 
 
-
-# To have in the end
-# print("\nInput filename and radius: ")
-# print("For example 'SampleCoordinates 0.08' and press enter.")
-# Inputs
+"""
+To have in the end
+print("\nInput filename and radius: ")
+print("For example 'SampleCoordinates 0.08' and press enter.")
+Inputs
+"""
 
 # GIVEN DATA
 radius = 0.08
@@ -142,10 +143,6 @@ end = time.time()
 print('Time to finish function: "plot_points"', end - start)
 
 print(indices, distance)
-
-
-
-
 
 
 """
