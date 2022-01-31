@@ -128,7 +128,6 @@ while True:
     coord_list = read_coordinate_file(filename)
     N = len(coord_list)
     end_1 = time.time()
-
     print("Choose function:")
     print("1. Fast")
     print("2. Normal")
