@@ -214,29 +214,32 @@ while True:
     print('Incorrect input, try alternatives 1 or 2\n')
 
 if int(selection) == 1:
-    print('Time to finish function: "read_coordinate_file"', end_1 - start_1)
+    print('\nTime to finish function: "read_coordinate_file"', end_1 - start_1, 's')
     start_2 = time.time()
     indices, distance = construct_fast_graph_connections(coord_list, radius)
     end_2 = time.time()
-    print('Time to finish function: "construct_fast_graph_connections"', end_2 - start_2)
+    print('Time to finish function: "construct_fast_graph_connections"', end_2 - start_2, 's')
 elif int(selection) == 2:
-    print('Time to finish function: "read_coordinate_file"', end_1 - start_1)
+    print('\nTime to finish function: "read_coordinate_file"', end_1 - start_1, 's')
     start_2 = time.time()
     indices, distance = construct_graph_connections(coord_list, radius)
     end_2 = time.time()
-    print('Time to finish function: "construct_graph_connections"', end_2 - start_2)
+    print('Time to finish function: "construct_graph_connections"', end_2 - start_2, 's')
 
 start_3 = time.time()
 graph = construct_graph(indices, distance, N)
 end_3 = time.time()
-print('Time to finish function: "construct_graph"', end_3 - start_3)
+print('Time to finish function: "construct_graph"', end_3 - start_3, 's')
 
 start_4 = time.time()
 path, start_end_dist = find_shortest_path(graph, start_node, end_node)
 end_4 = time.time()
-print('Time to finish function: "find_shortest_path"', end_4 - start_4)
+print('Time to finish function: "find_shortest_path"', end_4 - start_4, 's')
 
 start_5 = time.time()
 plot_points(coord_list, indices, path)
 end_5 = time.time()
-print('Time to finish function: "plot_points"', end_5 - start_5)
+print('Time to finish function: "plot_points"', end_5 - start_5, 's')
+
+print('\nThe shortest path from city:', start_node,'to', end_node,'is through cities:',path)
+print('The total distance is:', start_end_dist)
