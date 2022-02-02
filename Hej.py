@@ -173,14 +173,20 @@ def construct_fast_graph_connections(coord_list, radius):
     Tree = cKDTree(coord_list)
     possible_cities = Tree.query_ball_point(coord_list, radius)
     indices=[]
-    distances=[]
-
+    #dxdy = []
+    city_1 = []
+    city_2 = []
     for i, element in enumerate(possible_cities):
         for j in element:
             if i < j:
                 indices.append([i, j])
-                dxdy = coord_list[i] - coord_list[j]
-                distances.append(np.sqrt(np.square(dxdy[0]) + np.square(dxdy[1])))
+                city_1.append(coord_list[i])
+                city_2.append(coord_list[j])
+                # dxdy.append(coord_list[i] - coord_list[j])
+    city_1 = np.array(city_1)
+    city_2 = np.array(city_2)
+    ki = city_1-city_2
+    distances = np.sqrt(np.square(ki[:, 0]) + np.square(ki[:, 1]))
 
     return np.array(indices), np.array(distances)
 
