@@ -167,21 +167,26 @@ def find_shortest_path(graph, start_node, end_node):
     return path, start_end_dist
 
 
+##### TASK 9 #####
 def construct_fast_graph_connections(coord_list, radius):
+
     Tree = cKDTree(coord_list)
     possible_cities = Tree.query_ball_point(coord_list, radius)
     indices=[]
     distances=[]
+
     for i, element in enumerate(possible_cities):
         for j in element:
             if i < j:
                 indices.append([i, j])
                 dxdy = coord_list[i] - coord_list[j]
                 distances.append(np.sqrt(np.square(dxdy[0]) + np.square(dxdy[1])))
+
     return np.array(indices), np.array(distances)
 
 
 while True:
+
     print("\nEnter the name of the file.")
     print("For example 'SampleCoordinates' and press enter.")
     print("Input > ", end="")
@@ -194,7 +199,6 @@ while True:
 
 while True:
 
-    # Call functions
     start_1 = time.time()
     coord_list = read_coordinate_file(filename)
     N = len(coord_list)
@@ -206,6 +210,7 @@ while True:
     selection = input()
     if selection.isnumeric() and (int(selection) == 1 or int(selection) == 2):
         break
+
     print('Incorrect input, try alternatives 1 or 2\n')
 
 if int(selection) == 1:
