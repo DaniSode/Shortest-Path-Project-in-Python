@@ -9,7 +9,7 @@ import time
 
 ##### WHICH FILENAME #####
 def which_file(filename):
-    """Take the name of a coordinate file and return the corresponding radius, start and end city.
+    """Takes the name of a coordinate file and returns the corresponding radius, start and end city.
 
         :param filename: string of the name of the file containing the desired set of coordinates.
         :type filename: str
@@ -42,7 +42,7 @@ def which_file(filename):
 
 
 def read_coordinate_file(filename):
-    """Take the name of a coordinate file and convert its content to a numpy array.
+    """Takes the name of a coordinate file and converts its content to a numpy array.
 
         :param filename: string of the name of the file containing the desired set of coordinates.
         :type filename: str
@@ -72,18 +72,20 @@ def read_coordinate_file(filename):
 
 ##### TASK 2, 5 and 7 #####
 def plot_points(coord_list, indices, path):
-    """Takes an array of coordinates, a list of possible city pairs and a list with the shortest route between 2 cities.
-    Then plots all cities, possible routes from each city and the shortest route.
+    """
+    Takes an array of coordinates, a list of city pairs and a list with the shortest route between 2 cities.
+    Then plots all cities, routes between the cities and the shortest route.
 
-        :param coord_list: string of the name of the file containing the desired set of coordinates.
+        :param coord_list: Array containing the desired set of coordinates.
         :type coord_list: np.ndarray
-        :param indices:
-        :type indices:
-        :param path:
+        :param indices: Array with city pairs that are within a certain radius from each other.
+        :type indices: np.ndarray
+        :param path: A sequence of cities ensuring the shortest possible distance from start to end.
+        :type path: list of int
 
 
-        :return: Numpy array with the coordinate pairs found in the file.
-        :rtype: np.ndarray
+        :return: Figure showing possible routes between all cities and shortest path from start to end.
+        :rtype: None
     """
     # A function taking inputs as coord_list (returned from task 1), indices (defined in the
     # functions construct_graph_connections or construct_fast_graph_connections) and
@@ -134,7 +136,17 @@ def plot_points(coord_list, indices, path):
 
 ##### TASK 3 #####
 def construct_graph_connections(coord_list, radius):
+    """Calculates the distance between cities and returns city pairs that are within a given radius along with the
+    corresponding distance.
 
+    :param coord_list: Array containing a set of coordinates.
+    :type coord_list: np.ndarray
+    :param radius: The maximum allowed distance between cities.
+    :type radius: float
+
+    :return: Array of available city pairs and array with their distances.
+    :rtype: (np.ndarray, np.ndarray)
+    """    
     # A function taking coord_list (coordinates of all cities) and radius (the maximum possible
     # distance between two cities) and returns indices (all possible connections between cities)
     # and distances (the corresponding distances between the cities). The function are using a
@@ -159,7 +171,18 @@ def construct_graph_connections(coord_list, radius):
 """
 ##### TASK 4 #####
 def construct_graph(indices, distance, N):
+    """Constructs a sparse row matrix containing city pairs and the distance between them.
 
+    :param indices: Array with city pairs that are within a certain radius from each other.
+    :type indices: np.ndarray
+    :param distance: Array with distances between city pairs
+    :type distance: np.ndarray
+    :param N: Integer with number of cities
+    :type N: int
+
+    :return: Compressed sparse row matrix satisfying the relationship a[row_ind[k], col_ind[k]] = data[k]
+    :rtype: csr_matrix
+    """
     # A function taking indices (possible connections), distances (corresponding distances)
     # and N (total amount of cities) and returning graph (sparse matrix of indices and distances)
 
@@ -170,7 +193,18 @@ def construct_graph(indices, distance, N):
 
 ##### TASK 6 #####
 def find_shortest_path(graph, start_node, end_node):
+    """Calculates the shortest path between two specified cities.
 
+    :param graph: Compressed sparse row matrix containing city pairs and the distance between them.
+    :type graph: csr_matrix
+    :param start_node: The city where the path starts.
+    :type start_node: int
+    :param end_node: The city where the path ends.
+    :type end_node: int
+
+    :return: A sequence of cities ensuring the shortest possible distance along with the total distance.
+    :rtype: (list of int, float)
+    """    
     #
 
     distance, predecessor = shortest_path(graph, directed=False, return_predecessors=True, indices=start_node)
@@ -190,7 +224,16 @@ def find_shortest_path(graph, start_node, end_node):
 
 ##### TASK 9 #####
 def construct_fast_graph_connections(coord_list, radius):
+    """
+    Returns city pairs that are within a given radius along with the corresponding distance.
 
+    :param coord_list: [description]
+    :type coord_list: [type]
+    :param radius: [description]
+    :type radius: [type]
+    :return: [description]
+    :rtype: [type]
+    """
     Tree = cKDTree(coord_list)
     possible_cities = Tree.query_ball_point(coord_list, radius)
     indices=[]
