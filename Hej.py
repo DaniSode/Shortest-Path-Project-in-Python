@@ -126,8 +126,6 @@ def construct_graph_connections(coord_list, radius):
     distances = []
 
     for i, city in enumerate(coord_list):
-        # dxdy = coord_list - city
-        # tot_distances = np.sqrt(np.square(dxdy[i + 1:, 0]) + np.square(dxdy[i + 1:, 1]))
         tot_distances = np.hypot(coord_list[i+1:, 0]-city[0], coord_list[i+1:, 1]-city[1])
         for j, distance in enumerate(tot_distances):
             if distance <= radius:
