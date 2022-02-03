@@ -9,7 +9,15 @@ import time
 
 ##### WHICH FILENAME #####
 def which_file(filename):
-    'testing pydoc'
+    """Take the name of a coordinate file and return the corresponding radius, start and end city.
+
+        :param filename: string of the name of the file containing the desired set of coordinates.
+        :type filename: str
+
+        :return: The corresponding values of radius, start and end city according to the assignment.
+        :rtype: (float, int)
+    """
+
     # A function taking the name of the file as input
     # and returns the corresponding radius, start city and end city.
 
@@ -34,11 +42,13 @@ def which_file(filename):
 
 
 def read_coordinate_file(filename):
+    """Take the name of a coordinate file and convert its content to a numpy array.
 
-    """Read and converts a textfile of coordinates in string format to a numpy array.
+        :param filename: string of the name of the file containing the desired set of coordinates.
+        :type filename: str
 
-    :Inputs blbl
-
+        :return: Numpy array with the coordinate pairs found in the file.
+        :rtype: np.ndarray
     """
 
     with open(filename + ".txt", mode='r') as file:
@@ -62,7 +72,19 @@ def read_coordinate_file(filename):
 
 ##### TASK 2, 5 and 7 #####
 def plot_points(coord_list, indices, path):
+    """Takes an array of coordinates, a list of possible city pairs and a list with the shortest route between 2 cities.
+    Then plots all cities, possible routes from each city and the shortest route.
 
+        :param coord_list: string of the name of the file containing the desired set of coordinates.
+        :type coord_list: np.ndarray
+        :param indices:
+        :type indices:
+        :param path:
+
+
+        :return: Numpy array with the coordinate pairs found in the file.
+        :rtype: np.ndarray
+    """
     # A function taking inputs as coord_list (returned from task 1), indices (defined in the
     # functions construct_graph_connections or construct_fast_graph_connections) and
     # path (defined in function construct_graph). The function returns a merged plot of all
@@ -133,8 +155,8 @@ def construct_graph_connections(coord_list, radius):
                 distances.append(distance)
 
     return np.array(pair_indices), np.array(distances)
-
-
+"""
+"""
 ##### TASK 4 #####
 def construct_graph(indices, distance, N):
 
@@ -248,3 +270,4 @@ print('\nThe shortest path from city:', start_node,'to', end_node,'is through ci
 print('The total distance is:', start_end_dist)
 
 print(read_coordinate_file.__doc__)
+print(which_file.__doc__)
