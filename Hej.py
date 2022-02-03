@@ -6,6 +6,7 @@ from scipy.sparse.csgraph import shortest_path
 from scipy.spatial import cKDTree
 import time
 
+
 ##### WHICH FILENAME #####
 def which_file(filename):
     'testing pydoc'
@@ -32,14 +33,13 @@ def which_file(filename):
     return radius, start_node, end_node
 
 
-##### TASK 1 #####
 def read_coordinate_file(filename):
 
-    # A function taking the specific file as input and returns a list of all the coordinates
-    # of every available city as coord_list. The function reads line by line with a while loop,
-    # in the loop the line is modified ending up as two float numbers describing longitude
-    # and latitude of the cities. They are appended to a list which in turn are used to calculate
-    # the final x and y coordinate of each city.
+    """Read and converts a textfile of coordinates in string format to a numpy array.
+
+    :Inputs blbl
+
+    """
 
     with open(filename + ".txt", mode='r') as file:
         sample_coord = file.readline()
@@ -126,8 +126,9 @@ def construct_graph_connections(coord_list, radius):
     distances = []
 
     for i, city in enumerate(coord_list):
-        dxdy = coord_list - city
-        tot_distances = np.sqrt(np.square(dxdy[i + 1:, 0]) + np.square(dxdy[i + 1:, 1]))
+        # dxdy = coord_list - city
+        # tot_distances = np.sqrt(np.square(dxdy[i + 1:, 0]) + np.square(dxdy[i + 1:, 1]))
+        tot_distances = np.hypot(coord_list[i+1:, 0]-city[0], coord_list[i+1:, 1]-city[1])
         for j, distance in enumerate(tot_distances):
             if distance <= radius:
                 pair_indices.append([i, i + 1 + j])
@@ -173,7 +174,6 @@ def construct_fast_graph_connections(coord_list, radius):
     Tree = cKDTree(coord_list)
     possible_cities = Tree.query_ball_point(coord_list, radius)
     indices=[]
-    #dxdy = []
     city_1 = []
     city_2 = []
     for i, element in enumerate(possible_cities):
@@ -182,11 +182,10 @@ def construct_fast_graph_connections(coord_list, radius):
                 indices.append([i, j])
                 city_1.append(coord_list[i])
                 city_2.append(coord_list[j])
-                # dxdy.append(coord_list[i] - coord_list[j])
+
     city_1 = np.array(city_1)
     city_2 = np.array(city_2)
-    ki = city_1-city_2
-    distances = np.sqrt(np.square(ki[:, 0]) + np.square(ki[:, 1]))
+    distances = np.hypot(city_1[:, 0]-city_2[:, 0], city_1[:, 1]-city_2[:, 1])
 
     return np.array(indices), np.array(distances)
 
@@ -249,3 +248,5 @@ print('Time to finish function: "plot_points"', end_5 - start_5, 's')
 
 print('\nThe shortest path from city:', start_node,'to', end_node,'is through cities:',path)
 print('The total distance is:', start_end_dist)
+
+print(read_coordinate_file.__doc__)
