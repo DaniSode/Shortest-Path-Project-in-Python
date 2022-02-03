@@ -224,15 +224,14 @@ def find_shortest_path(graph, start_node, end_node):
 
 ##### TASK 9 #####
 def construct_fast_graph_connections(coord_list, radius):
-    """
-    Returns city pairs that are within a given radius along with the corresponding distance.
+    """Returns city pairs that are within a given radius along with the corresponding distance using a faster method.
 
-    :param coord_list: [description]
-    :type coord_list: [type]
-    :param radius: [description]
-    :type radius: [type]
-    :return: [description]
-    :rtype: [type]
+    :param coord_list: Array containing a set of coordinates.
+    :type coord_list: np.ndarray
+    :param radius: The maximum allowed distance between cities.
+    :type radius: float
+    :return: Array of available city pairs and array of distances.
+    :rtype: (np.ndarray, np.ndarray)
     """
     Tree = cKDTree(coord_list)
     possible_cities = Tree.query_ball_point(coord_list, radius)
@@ -311,6 +310,3 @@ print('Time to finish function: "plot_points"', end_5 - start_5, 's')
 
 print('\nThe shortest path from city:', start_node,'to', end_node,'is through cities:',path)
 print('The total distance is:', start_end_dist)
-
-print(read_coordinate_file.__doc__)
-print(which_file.__doc__)
