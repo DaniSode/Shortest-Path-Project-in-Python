@@ -174,7 +174,6 @@ def find_shortest_path(graph, start_node, end_node):
     return path, start_end_dist
 
 
-
 def construct_fast_graph_connections(coord_list, radius):
 
     """Returns city pairs that are within a given radius along with the corresponding distance using a faster method.
