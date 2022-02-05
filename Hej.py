@@ -97,6 +97,7 @@ def plot_points(coord_list, indices, path):
         path_coord_x.append(coord_list[city, 0])
         path_coord_y.append(coord_list[city, 1])
     plt.plot(path_coord_x, path_coord_y, linewidth=1, c="blue")
+    plt.title('Shortest path')
     plt.show()
 
 
@@ -203,6 +204,7 @@ def construct_fast_graph_connections(coord_list, radius):
 
     return np.array(indices), np.array(distances)
 
+# Creating a meny where the input is which file to run and whether to run the fast or slow function when constructing graph connections.
 
 while True:
 
