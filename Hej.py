@@ -1,3 +1,6 @@
+#Assignment1_code
+#Authors: Felix Mare, Daniel Soderqvist
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.collections import LineCollection
@@ -98,7 +101,7 @@ def plot_points(coord_list, indices, path):
         path_coord_y.append(coord_list[city, 1])
     plt.plot(path_coord_x, path_coord_y, linewidth=1, c="blue")
     plt.title('Shortest path')
-    plt.show()
+
 
 
 def construct_graph_connections(coord_list, radius):
@@ -204,7 +207,8 @@ def construct_fast_graph_connections(coord_list, radius):
 
     return np.array(indices), np.array(distances)
 
-# Creating a meny where the input is which file to run and whether to run the fast or slow function when constructing graph connections.
+# Creating a menu where the input is which file to run and whether to run the fast or slow function when constructing graph connections.
+# Printing time for each function and showing plot.
 
 while True:
 
@@ -259,7 +263,9 @@ print('Time to finish function: "find_shortest_path"', end_4 - start_4, 's')
 start_5 = time.time()
 plot_points(coord_list, indices, path)
 end_5 = time.time()
-print('Time to finish function: "plot_points"', end_5 - start_5, 's')
+print('Time to finish function: "plot_points" excluding plot show', end_5 - start_5, 's')
 
 print('\nThe shortest path from city:', start_node,'to', end_node,'is through cities:',path)
 print('The total distance is:', start_end_dist)
+
+plt.show()
