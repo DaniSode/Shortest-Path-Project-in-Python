@@ -1,5 +1,5 @@
-#Assignment1_code
-#Authors: Felix Mare, Daniel Soderqvist
+# Assignment_1_code
+# Authors: Felix Mare, Daniel Soderqvist
 
 import numpy as np
 import matplotlib.pyplot as plt
