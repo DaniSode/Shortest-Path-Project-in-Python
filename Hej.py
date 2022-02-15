@@ -8,6 +8,7 @@ from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import shortest_path
 from scipy.spatial import cKDTree
 import time
+from tabulate import tabulate
 
 
 def which_file(filename):
@@ -236,36 +237,49 @@ while True:
         break
 
     print('Incorrect input, try alternatives 1 or 2\n')
-
+start_6 = time.time()
+table = []
 if int(selection) == 1:
-    print('\nTime to finish function: "read_coordinate_file"', end_1 - start_1, 's')
     start_2 = time.time()
     indices, distance = construct_fast_graph_connections(coord_list, radius)
     end_2 = time.time()
-    print('Time to finish function: "construct_fast_graph_connections"', end_2 - start_2, 's')
+    table.append('read_coordinate_file')
+    table.append('construct_fast_graph_connections')
 elif int(selection) == 2:
-    print('\nTime to finish function: "read_coordinate_file"', end_1 - start_1, 's')
     start_2 = time.time()
     indices, distance = construct_graph_connections(coord_list, radius)
     end_2 = time.time()
-    print('Time to finish function: "construct_graph_connections"', end_2 - start_2, 's')
+    table.append('read_coordinate_file')
+    table.append('construct_graph_connections')
 
 start_3 = time.time()
 graph = construct_graph(indices, distance, N)
 end_3 = time.time()
-print('Time to finish function: "construct_graph"', end_3 - start_3, 's')
+table.append('construct_graph')
 
 start_4 = time.time()
 path, start_end_dist = find_shortest_path(graph, start_node, end_node)
 end_4 = time.time()
-print('Time to finish function: "find_shortest_path"', end_4 - start_4, 's')
+table.append('find_shortest_path')
 
 start_5 = time.time()
 plot_points(coord_list, indices, path)
 end_5 = time.time()
-print('Time to finish function: "plot_points" excluding plot show', end_5 - start_5, 's')
+table.append('plot_points')
 
 print('\nThe shortest path from city:', start_node,'to', end_node,'is through cities:',path)
 print('The total distance is:', start_end_dist)
+end_6 = time.time()
+print('\nThe time to finish each and one of the functions is listed in the table below:')
+time_total = [[round(end_1 - start_1, 3)],
+              [round(end_2 - start_2, 3)],
+              [round(end_3 - start_3, 3)],
+              [round(end_4 - start_4, 3)],
+              [round(end_5 - start_5, 3)],
+              [round(end_6 - start_6, 3)]]
+table.append('Running the entire program')
+dictionary = list(zip(table, time_total))
+headers = ["function", "time (s)"]
+print(tabulate(dictionary, headers=headers, tablefmt="pretty"))
 
 plt.show()
